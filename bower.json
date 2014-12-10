@@ -1,0 +1,26 @@
+{
+  "name": "webapp-mementos",
+  "version": "1.0",
+  "authors": [
+    "maniart <mani.art@gmail.com>"
+  ],
+  "description": "Instagram contextual image mashup",
+  "main": "index.html",
+  "keywords": [
+    "instagram",
+    "mashup",
+    "art",
+    "digital",
+    "art"
+  ],
+  "license": "MIT",
+  "homepage": "http://maninilchiani.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

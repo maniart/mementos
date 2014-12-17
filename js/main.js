@@ -35,14 +35,16 @@ var Butter = /*
     var column = row = 0;
     //for (var i = 0; i < iterations; i++) {
     var _this = this;
-    var rAFsort = function() {
-    	//debugger;
-    	requestAnimationFrame(rAFsort);
+    var rAFsortColumn = function() {
+    	requestAnimationFrame(rAFsortColumn);
 		if(column < _this.width) {
 			_this.sortColumn(column);
 			context.putImageData(_this.imageData, 0, 0);
 			column++;
 		}
+    };
+    var rAFsortRow = function() {
+    	requestAnimationFrame(rAFsortRow);
 		if(row < _this.height) {
 			_this.sortRow(row);
 			context.putImageData(_this.imageData, 0, 0);
@@ -50,17 +52,11 @@ var Butter = /*
 		}
     	
     };
-    
-    rAFsort();
-      /*
-      for (var column = 0; column < this.width; column++) {
-        this.sortColumn(column);
-      }
-
-      for (var row = 0; row < this.height; row++) {
-        this.sortRow(row);
-      }
-      */
+    window.rAFsortColumn = rAFsortColumn;
+    window.rAFsortRow = rAFsortRow;
+    rAFsortColumn();
+    //rAFsortRow();
+      
   };
 
     //return this.imageData;
@@ -377,7 +373,8 @@ output = document.querySelector('#output');
 context = output.getContext('2d');
 //Butter = require('butter.js');
 //butter = new rker('../node_modules/butter.js/src/butter-worker.js');
-butter = new Butter('white', -10000000);
+//butter = new Butter('white', -10000000);
+butter = new Butter('bright', -10000000);
 /*
 butter.addEventListener('message', function afterSort(e) {
   context.putImageData(e.data.imageData, 0, 0);

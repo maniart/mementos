@@ -26,14 +26,33 @@ var Butter = /*
     }
   }
 
+
   Butter.prototype.sortImageData = function sortImageData(imageData, width, height, iterations) {
     this.imageData = imageData;
     this.width = width;
     this.height = height;
     iterations || (iterations = 1);
-
-    for (var i = 0; i < iterations; i++) {
-
+    var column = row = 0;
+    //for (var i = 0; i < iterations; i++) {
+    var _this = this;
+    var rAFsort = function() {
+    	//debugger;
+    	requestAnimationFrame(rAFsort);
+		if(column < _this.width) {
+			_this.sortColumn(column);
+			context.putImageData(_this.imageData, 0, 0);
+			column++;
+		}
+		if(row < _this.height) {
+			_this.sortRow(row);
+			context.putImageData(_this.imageData, 0, 0);
+			row++;
+		}
+    	
+    };
+    
+    rAFsort();
+      /*
       for (var column = 0; column < this.width; column++) {
         this.sortColumn(column);
       }
@@ -41,29 +60,11 @@ var Butter = /*
       for (var row = 0; row < this.height; row++) {
         this.sortRow(row);
       }
-    }
-
-    return this.imageData;
+      */
   };
-  Butter.prototype.sortImageData = function sortImageData(imageData, width, height, iterations) {
-    this.imageData = imageData;
-    this.width = width;
-    this.height = height;
-    iterations || (iterations = 1);
 
-    for (var i = 0; i < iterations; i++) {
-
-      for (var column = 0; column < this.width; column++) {
-        this.sortColumn(column);
-      }
-
-      for (var row = 0; row < this.height; row++) {
-        this.sortRow(row);
-      }
-    }
-
-    return this.imageData;
-  };
+    //return this.imageData;
+  //};
   Butter.prototype.sort = function sort(canvas, iterations) {
    
     if (!canvas) {
@@ -76,9 +77,12 @@ var Butter = /*
         imageData = context.getImageData(0, 0, width, height);
         // And sort it
   	//debugger;
-    var sortedImage = this.sortImageData(imageData, width, height, iterations);
-
-    context.putImageData(sortedImage, 0, 0);
+    //var sortedImage = this.sortImageData(imageData, width, height, iterations);
+    
+    
+    this.sortImageData(imageData, width, height, iterations);
+     
+    //context.putImageData(sortedImage, 0, 0);
   };
 
   
@@ -102,7 +106,6 @@ var Butter = /*
       for (var j = 0; j < width; j++) {
         pixelData[j] = this.getPixelValue(x, range.start + j);
       }
-
       // Sort them!
       pixelData.sort();
 
@@ -396,7 +399,7 @@ init = function() {
 			_.each(sources, function(source) { context.drawImage(source, 0, 0, width, height); });				
 			//debugger;
 			//context.drawImage(sources[0], 0, 0, width, height);
-
+			//debugger;
 			butter.sort(output);
 			/*
 			butter.postMessage({

@@ -364,7 +364,8 @@ var $,
 	width,
 	height,
 	sources,
-	init;
+	init,
+	clickCount;
 
 $ = require('jquery');
 _ = require('underscore');
@@ -374,13 +375,13 @@ context = output.getContext('2d');
 //Butter = require('butter.js');
 //butter = new rker('../node_modules/butter.js/src/butter-worker.js');
 //butter = new Butter('white', -10000000);
-butter = new Butter('bright', -10000000);
+butter = new Butter('black', -50000000);
 /*
 butter.addEventListener('message', function afterSort(e) {
   context.putImageData(e.data.imageData, 0, 0);
 }, false);
 */
-
+clickCount = 0;
 width = output.width;
 height = output.height;
 sources = [];
@@ -389,15 +390,33 @@ init = function() {
 	console.log('mementos \nMani Nilchiani \n2014 \nNYC \nhttp://maninilchiani.com');
 	context.globalCompositeOperation = 'multiply';
 	_.times(2, function() { sources.push(new Image()); });
-	sources[0].src = 'img/youngme.jpg';
-	sources[1].src = 'img/kitchenlight.jpg';
+	//sources[0].src = 'img/morocco.jpg';
+	//sources[1].src = 'img/new-zealand.jpg';
+
+	sources[0].src = 'img/indonesia.jpg';
+	sources[1].src = 'img/venezuela.jpg';
+	//sources[0].src = 'img/australia.jpg';
+	//sources[1].src = 'img/ireland.jpg';
 	sources[0].onload = function() {
+	
 		sources[1].onload = function() {
 			_.each(sources, function(source) { context.drawImage(source, 0, 0, width, height); });				
-			//debugger;
+						//debugger;
 			//context.drawImage(sources[0], 0, 0, width, height);
 			//debugger;
-			butter.sort(output);
+			$('body').on('click', function() {
+				clickCount++;
+				if(clickCount %2 === 0) {
+					$('#output').fadeIn(400, function() {
+						butter.sort(output);
+					});
+				} else {
+					$('#output').fadeOut(300);
+				}
+				
+		
+			});
+					
 			/*
 			butter.postMessage({
 				imageData: context.getImageData(0, 0, canvas.width, canvas.height),
